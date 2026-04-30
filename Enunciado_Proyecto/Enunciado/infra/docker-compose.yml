@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: mmsql_db
+    restart: always
+    environment:
+      # Estos valores deben cambiarse por seguridad en el entorno real
+      POSTGRES_USER: admin_asir
+      POSTGRES_PASSWORD: password_segura_123
+      POSTGRES_DB: masmovil_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data:/var/lib/postgresql/data
+      - ./init:/docker-entrypoint-initdb.d # Para scripts iniciales opcionales
+
+# Nota para alumnos:
+# 1. Ejecutar con 'docker-compose up -d'
+# 2. Asegúrate de que el puerto 5432 esté abierto en el firewall de tu Cloud.
+# 3. No subas las contraseñas reales a GitHub (usa un archivo .env).

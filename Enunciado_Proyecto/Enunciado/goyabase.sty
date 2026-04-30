@@ -1,0 +1,119 @@
+\ProvidesPackage{goyabase}[2026/04/21 Estilo Base para BBDD]
+
+% --- PAQUETES DE CONFIGURACIÓN BÁSICA ---
+\RequirePackage[spanish, provide=*]{babel}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[T1]{fontenc}
+\RequirePackage[margin=2.2cm]{geometry}
+\RequirePackage{hyperref}
+\RequirePackage{enumitem}
+\RequirePackage{booktabs}
+\RequirePackage{xcolor}
+\RequirePackage{titlesec}
+\RequirePackage{titling}
+\RequirePackage{microtype}
+\RequirePackage{array}
+\RequirePackage{multirow}
+\RequirePackage{listings}
+\RequirePackage{listingsutf8}
+\RequirePackage{upquote}
+\RequirePackage{tcolorbox}
+\RequirePackage{float}
+\RequirePackage{lmodern} % Fuente compatible con pdfLaTeX
+\RequirePackage[autostyle]{csquotes}
+\RequirePackage{eurosym}
+
+% --- DEFINICIÓN DE COLORES CORPORATIVOS ---
+\definecolor{primary}{RGB}{15,118,110}   
+\definecolor{secondary}{RGB}{37,99,235} 
+\definecolor{muted}{RGB}{107,114,128}     
+\definecolor{bgcode}{RGB}{248,250,252}    
+\definecolor{frame}{RGB}{226,232,240}     
+\definecolor{alert}{RGB}{185,28,28}
+\definecolor{RA5}{RGB}{185,0,200}
+\definecolor{RA6}{RGB}{140,200,10}
+\definecolor{bonus}{RGB}{153,27,27}
+\definecolor{success}{RGB}{21,128,61}
+\definecolor{accent}{RGB}{200,50,50}
+
+% --- ESTILO DE SECCIONES ---
+\titleformat{\section}{\Large\bfseries\color{primary}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{secondary}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\bfseries\color{secondary}}{\thesubsubsection}{0.6em}{}
+
+% --- CONFIGURACIÓN DE LISTINGS (CÓDIGO SQL/GENERAL) ---
+\lstdefinelanguage{yaml}{
+  keywords={true,false,null,y,n},
+  keywordstyle=\color{secondary}\bfseries,
+  sensitive=false,
+  comment=[l]{\#},
+  commentstyle=\color{muted}\ttfamily,
+  stringstyle=\color{primary}\ttfamily,
+  morestring=[b]',
+  morestring=[b]"
+}
+\lstdefinelanguage{cql}[]{SQL}{
+  morekeywords={ALLOW, FILTERING, KEYSPACE, CLUSTERING}
+}
+\lstdefinelanguage{javascript}{
+  keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, let, const, if, in, while, do, else, case, break},
+  keywordstyle=\color{secondary}\bfseries,
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{muted}\ttfamily,
+  stringstyle=\color{primary}\ttfamily,
+  morestring=[b]',
+  morestring=[b]"
+}
+
+\lstdefinelanguage{SQLPlus}[]{SQL}{
+  morekeywords={IF,ELSE,END,DECLARE,BEGIN,EXCEPTION,WHEN,LOOP,ELSIF,THEN,RAISE,RETURN,ROLE,ACCOUNT,LOCK,UNLOCK,CASE,WHEN,THEN,ELSE,END,CAST,AS,STR_TO_DATE,IFNULL,COALESCE,ON,DUPLICATE,KEY,UPDATE,TRUNCATE},
+  sensitive=false
+}
+
+\lstset{
+  language=SQLPlus,
+  upquote=true,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{secondary}\bfseries,
+  commentstyle=\color{muted}\itshape,
+  stringstyle=\color{primary},
+  columns=fullflexible,
+  backgroundcolor=\color{bgcode},
+  frame=single,
+  rulecolor=\color{frame},
+  breaklines=true,
+  tabsize=2,
+  showstringspaces=false,
+  inputencoding = utf8/latin1,
+  extendedchars = true,
+  literate = % Soporte para tildes y ñ dentro de bloques de código
+      {á}{{\'a}}1  {é}{{\'e}}1  {í}{{\'i}}1 {ó}{{\'o}}1  {ú}{{\'u}}1
+      {Á}{{\'A}}1  {É}{{\'E}}1  {Í}{{\'I}}1 {Ó}{{\'O}}1  {Ú}{{\'U}}1
+      {ñ}{{\~n}}1  {Ñ}{{\~N}}1  {¿}{{?`}}1  {¡}{{!`}}1
+      {€}{{\euro}}1
+}
+
+% --- CONFIGURACIÓN DE CAJAS DE TEXTO (TCOLORBOX) ---
+\tcbset{
+  colback=white,
+  colframe=primary,
+  coltitle=white,
+  colbacktitle=primary,
+  fonttitle=\bfseries,
+  arc=2mm,
+  boxrule=0.6pt,
+  commandbox/.style={colback=black!5, colframe=black, fonttitle=\bfseries},
+  primarybox/.style={colback=white, colframe=primary, fonttitle=\bfseries}
+}
+
+\endinput
+
+  fonttitle=\bfseries,
+  arc=2mm,
+  boxrule=0.6pt,
+  commandbox/.style={colback=black!5, colframe=black, fonttitle=\bfseries}
+}
+
+\endinput

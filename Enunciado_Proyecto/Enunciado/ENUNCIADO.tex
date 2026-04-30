@@ -1,0 +1,105 @@
+\PassOptionsToPackage{provide=*}{babel}
+\documentclass[12pt,a4paper,spanish,es-tabla,es-noshorthands]{article}
+\usepackage{goyabase}
+
+\title{\textbf{Proyecto Integrador: Sistema MMSQL (MásMóvil)}}
+\author{Departamento de Informática}
+\date{Curso 2025-2026}
+
+\begin{document}
+
+\maketitle
+
+\section*{Introducción}
+El grupo \textbf{MásMóvil} requiere una nueva infraestructura de datos para gestionar de forma eficiente y segura las altas de sus clientes. El objetivo de este proyecto es que el alumnado actúe como administradores de bases de datos (DBA) para desplegar un entorno profesional basado en \textbf{PostgreSQL}. 
+
+El proyecto integra todos los Resultados de Aprendizaje del módulo, desde la instalación y configuración del sistema hasta la seguridad y el aseguramiento de la información.
+
+\section{Fase de Investigación: Cloud e Infraestructura}
+Antes de comenzar con la implementación técnica, cada grupo de trabajo debe realizar una labor de investigación obligatoria sobre el alojamiento del sistema.
+
+\subsection{Elección del Proveedor Cloud}
+Es obligatorio que el servidor de base de datos sea accesible de forma remota. Para ello, los alumnos deben investigar al menos tres proveedores que ofrezcan capas gratuitas (\textit{Free Tier}) o servicios económicos:
+\begin{itemize}
+    \item \textbf{Opciones sugeridas:} Oracle Cloud, AWS, Google Cloud, Azure o VPS privados (ej. Ionos, OVH).
+    \item \textbf{Criterios de evaluación:} Facilidad de configuración de red (apertura del puerto \texttt{5432}), ubicación geográfica de los datos y límites de uso.
+\end{itemize}
+
+\begin{tcolorbox}[title=Requisito de Infraestructura]
+El sistema gestor \textbf{DEBE} ejecutarse dentro de un contenedor \textbf{Docker}. No se admitirán instalaciones directas sobre el sistema operativo (\textit{bare metal}).
+\end{tcolorbox}
+
+\section{Diseño y Desarrollo de la Base de Datos}
+El diseño de la base de datos debe basarse obligatoriamente en el formulario de alta adjunto en la carpeta del proyecto: \textbf{\texttt{02\_Formulario\_MasMovil.pdf}}. 
+
+\subsection{Modelo Lógico y Físico (RA2/RA3)}
+\begin{itemize}
+    \item El modelo debe estar normalizado hasta la \textbf{3ª Forma Normal (3FN)}.
+    \item Se deben utilizar tipos de datos óptimos para cada campo extraído del PDF.
+    \item Es obligatorio implementar restricciones de integridad física mediante \texttt{CHECK} y \textbf{expresiones regulares} (\textit{Regex}) para validar: DNI/NIE, Email, IBAN y Teléfono.
+\end{itemize}
+
+\subsection{Seguridad y Privilegios (RA5/RA6)}
+Se debe implementar un modelo de control de acceso basado en roles (\textbf{RBAC}). Para la configuración de usuarios y permisos, los alumnos deben seguir las directrices de la \textbf{guía entregada por el profesor}.
+\begin{itemize}
+    \item \textbf{Rol \texttt{db\_admin}:} Gestión total de la estructura.
+    \item \textbf{Rol \texttt{app\_user}:} Permisos DML necesarios para el funcionamiento de una aplicación (\texttt{INSERT}, \texttt{UPDATE}, \texttt{SELECT}).
+    \item \textbf{Rol \texttt{auditor\_user}:} Acceso de solo lectura para informes y estadísticas.
+\end{itemize}
+
+\section{Aseguramiento y Automatización (RA6)}
+La pérdida de datos no es una opción en un entorno profesional. Se debe programar una tarea automática (vía \texttt{cron} o similar) que realice un volcado de la base de datos (\texttt{pg\_dump}) diariamente.
+
+\begin{tcolorbox}[title=Seguridad Crítica]
+Las copias de seguridad deben almacenarse en una \textbf{ubicación externa} al servidor principal (ej. almacenamiento en la nube, otro servidor o equipo local mediante transferencia automatizada).
+\end{tcolorbox}
+
+\section{Metodología y Uso de la IA}
+Este proyecto permite el uso libre de herramientas de Inteligencia Artificial, pero bajo un estricto control de auditoría.
+
+\subsection{El Diario de IA}
+Es obligatorio entregar el archivo \texttt{diario\_IA.md}. En este documento se deben registrar los \textit{prompts} utilizados, el código generado, los errores técnicos detectados en dicha generación y las correcciones manuales aplicadas por el grupo.
+
+\section{Archivos de Ejemplo y Referencia}
+Se han incluido varios archivos en la estructura del proyecto como punto de partida:
+\begin{itemize}
+    \item \textbf{\texttt{infra/docker-compose.yml}:} Configuración básica del contenedor PostgreSQL.
+    \item \textbf{\texttt{infra/backup\_cron.sh}:} Esqueleto para la automatización de copias de seguridad.
+    \item \textbf{\texttt{src/db\_test.py}:} Script de prueba de conexión en Python.
+    \item \textbf{\texttt{docs/SOLUCION\_REFERENCIA.sql}:} Ejemplo de implementación de tablas y roles.
+\end{itemize}
+
+\begin{tcolorbox}[title=Aviso Importante]
+Estos archivos son meramente \textbf{ejemplos de base} y están \textbf{incompletos}. Es responsabilidad de cada grupo completarlos, adaptarlos a su diseño específico y verificar su correcto funcionamiento. No se deben utilizar \enquote{tal cual} sin una revisión y ampliación previa.
+\end{tcolorbox}
+
+\section{Ejercicios y Entregables}
+La entrega final consistirá en la URL de un repositorio de \textbf{Git} público con la siguiente estructura:
+\begin{itemize}
+    \item \textbf{Directorio \texttt{infra/}:} Archivos \texttt{docker-compose.yml} y scripts de backup.
+    \item \textbf{Directorio \texttt{sql/}:} Scripts \texttt{DDL}, \texttt{DML} y al menos \textbf{10 consultas} de analítica de negocio.
+    \item \textbf{Directorio \texttt{docs/}:} Diario de IA y el \textbf{Modelo Relacional} diseñado en \textbf{hoja de cálculo} (incluyendo tipos de datos, claves y restricciones). El diseño de un diagrama Entidad-Relación es bien valorado pero opcional.
+\end{itemize}
+
+\begin{tcolorbox}[title=Valoración Extra (Puntos VIP)]
+Se ultra-valorará la inclusión de un \textbf{backend en Python} con interfaz \textbf{HTML} que permita realizar altas de clientes de forma gráfica interactuando con la base de datos PostgreSQL.
+\end{tcolorbox}
+
+\section{Checklist de Autoevaluación}
+Antes de realizar la entrega final, asegúrate de que tu grupo cumple con los siguientes puntos críticos. 
+%
+Tienes un archivo \texttt{CHECKLIST.md} que puedes ir editando
+
+\begin{itemize}[label=O]
+    \item \textbf{Investigación:} Comparativa de 3 proveedores Cloud en el \texttt{README.md}.
+    \item \textbf{Infraestructura:} PostgreSQL funcionando en \textbf{Docker} con acceso remoto.
+    \item \textbf{Diseño:} Modelo basado en el PDF del formulario y documentado en \textbf{hoja de cálculo}.
+    \item \textbf{Normalización:} Estructura de tablas en \textbf{3FN}.
+    \item \textbf{Integridad:} Restricciones \texttt{CHECK} con Regex para campos sensibles (DNI, IBAN...).
+    \item \textbf{Seguridad:} Implementación de \textbf{RBAC} siguiendo la guía del profesor.
+    \item \textbf{Backups:} Tarea automática diaria con almacenamiento en \textbf{ubicación externa}.
+    \item \textbf{IA:} Diario de auditoría \texttt{diario\_IA.md} completo y crítico.
+    \item \textbf{Git:} Repositorio público con participación equitativa de todos los miembros.
+\end{itemize}
+
+\end{document}
